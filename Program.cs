@@ -118,7 +118,6 @@ class Program
         Console.ReadKey();
     }
 
-    // Save data to JSON file
     static void SaveData(List<Student> students, List<PersonalSupervisor> supervisors, SeniorTutor seniorTutor)
     {
         var data = new UniversityData
@@ -128,7 +127,10 @@ class Program
             SeniorTutor = seniorTutor
         };
 
-        var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        var json = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings
+        {
+            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+        });
         File.WriteAllText(DataFilePath, json);
         Console.WriteLine("Data saved.");
     }
